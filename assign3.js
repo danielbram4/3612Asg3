@@ -18,17 +18,17 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.get("/paintings-nested/", (req, resp) => {
+app.get("/paintings/", (req, resp) => {
   resp.json(paintings);
 });
 
-app.get("/paintings-nested/:id", (req, resp) => {
+app.get("/painting/:id", (req, resp) => {
   const match = paintings.filter((p) => p.paintingID == req.params.id);
   if (match.length > 0) resp.json(match);
   else resp.json("Painting with that Id not found, error!");
 });
 
-app.get("/paintings-nested/gallery/:galleryID", (req, resp) => {
+app.get("/painting/gallery/:galleryID", (req, resp) => {
   const match = paintings.filter(
     (p) => p.gallery.galleryID == req.params.galleryID
   );
@@ -36,13 +36,13 @@ app.get("/paintings-nested/gallery/:galleryID", (req, resp) => {
   else resp.json("Gallery with that Id not found, error!");
 });
 
-app.get("/paintings-nested/artist/:id", (req, resp) => {
+app.get("/painting/artist/:id", (req, resp) => {
   const match = paintings.filter((p) => p.artist.artistID == req.params.id);
   if (match.length > 0) resp.json(match);
   else resp.json("Artist with that Id not found, error!");
 });
 
-app.get("/paintings-nested/year/:min/:max", (req, resp) => {
+app.get("/painting/year/:min/:max", (req, resp) => {
   const match = paintings.filter(function (item) {
     return (
       item.yearOfWork >= req.params.min && item.yearOfWork <= req.params.max
@@ -52,14 +52,14 @@ app.get("/paintings-nested/year/:min/:max", (req, resp) => {
   else resp.json("Paintings not found within those years, error!");
 });
 
-app.get("/paintings-nested/title/:text", (req, resp) => {
+app.get("/painting/title/:text", (req, resp) => {
   const text = req.params.text.toLowerCase();
   const matches = paintings.filter((p) => p.title.toLowerCase().includes(text));
   if (matches.length > 0) resp.json(matches);
   else resp.json("Title not found, error!");
 });
 
-app.get("/paintings-nested/color/:name", (req, resp) => {
+app.get("/painting/color/:name", (req, resp) => {
   let match;
   const color = req.params.name.toLowerCase();
   match = paintings.filter((p) =>
